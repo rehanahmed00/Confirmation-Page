@@ -25,7 +25,7 @@
             const client = urlParams.get('client');
             const biz = urlParams.get('biz');
             if (client) {
-                const googleScriptUrl = "https://script.google.com/macros/s/AKfycbz7isazGEOReQr65y89E9UYO4TQXfbzVO9IEFCneTfG2fwIYmDKuOsVZDlCinzkW3ipsA/exec";
+                const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzjWt12tKZ_ORdjs0kIsYRsOcca304qWnQ0x3tQSBIP4hVNvbOSJlEeW4tbKiBbjWyjiA/exec";
                 fetch(`${googleScriptUrl}?client=${encodeURIComponent(client)}&biz=${encodeURIComponent(biz)}`, { mode: 'no-cors' })
                 .then(() => console.log("Sync successful"))
                 .catch(err => console.error("Sync error:", err));
