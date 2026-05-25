@@ -6,49 +6,33 @@
     <title>Request Received | Ruya Web Studio</title>  
     <style>  
         body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; color: #333; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; }  
-        .container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 500px; }  
-        h1 { color: #007BFF; margin-bottom: 10px; font-size: 1.8rem; }  
-        p { font-size: 1.1rem; line-height: 1.6; color: #666; }  
-        .status-pill { display: inline-block; background: #e7f3ff; color: #007BFF; padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; margin-bottom: 20px; }  
-        #status-msg { margin-top: 15px; font-size: 0.85rem; color: #999; }  
+        .container { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 500px; width: 90%; }  
+        h1 { color: #007BFF; margin-bottom: 15px; font-size: 1.8rem; }  
+        p { font-size: 1.1rem; line-height: 1.6; color: #666; margin: 12px 0; }  
+        .status-footer { margin-top: 30px; font-size: 0.85rem; color: #28a745; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
     </style>  
 </head>  
 <body>  
     <div class="container">  
-        <div class="status-pill">✓ Request Received</div>  
-        <h1>Thank You!</h1>  
-        <p>Your request has been successfully captured. Ruya Web Studio is now preparing your custom demo concept tailored for your business.</p>  
-        <p>We will reach out to you via email shortly with the digital vision for your business.</p>  
-        <div id="status-msg">Syncing to database...</div>  
+        <h1>Thank you for your interest!</h1>  
+        <p>Ruya Web Studio will now begin working on your custom demo website. We will reach out to you shortly via email with your demo website for your business.</p>  
+        
+        <div class="status-footer">✓ Request received</div>
     </div>  
+
     <script>  
-    (async function() {  
+    (function() {  
+        // Instantly capture parameters from the URL  
         const urlParams = new URLSearchParams(window.location.search);  
         const clientName = urlParams.get('client') || 'Unknown';  
         const bizName = urlParams.get('biz') || 'Unknown';  
-        const statusMsg = document.getElementById('status-msg');  
 
-    const clickData = {  
-        client: clientName,  
-        biz: bizName,  
-        time: new Date().toISOString(),  
-        synced: false  
-    };  
-
-    let pending = JSON.parse(localStorage.getItem('ruya_pending_clicks') || '[]');  
-    pending.push(clickData);  
-    localStorage.setItem('ruya_pending_clicks', JSON.stringify(pending));  
-
-    try {  
+        // Fire the tracking fetch instantly to your Google Apps Script  
         const bridgeUrl = "https://script.google.com/macros/s/AKfycbz7isazGEOReQr65y89E9UYO4TQXfbzVO9IEFCneTfG2fwIYmDKuOsVZDlCinzkW3ipsA/exec";  
-        await fetch(`${bridgeUrl}?client=${encodeURIComponent(clientName)}&biz=${encodeURIComponent(bizName)}`, { mode: 'no-cors' });  
-        clickData.synced = true;  
-        statusMsg.textContent = '✓ Request recorded successfully';  
-        statusMsg.style.color = '#28a745';  
-    } catch(e) {  
-        statusMsg.textContent = 'Request received. Will be recorded shortly.';  
-    }  
-})();  
-</script>
+        
+        fetch(`${bridgeUrl}?client=${encodeURIComponent(clientName)}&biz=${encodeURIComponent(bizName)}`, { mode: 'no-cors' })
+        .catch(e => console.log("Silent logging fallback"));
+    })();  
+    </script>
 </body>  
 </html>
